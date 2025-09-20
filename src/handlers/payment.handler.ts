@@ -237,7 +237,7 @@ export async function handlePaymentCheckPhoto(ctx: Context) {
 	}
 
 	try {
-		await ctx.telegram.sendPhoto(adminChatId, fileId, {
+		await ctx.telegram.sendPhoto(Number(`-${adminChatId}`), fileId, {
 			caption: `🧾 Yangi to‘lov chek:\n👤 ${ctx.from?.first_name} (${ctx.from?.id})`,
 			reply_markup: {
 				inline_keyboard: [
@@ -252,7 +252,7 @@ export async function handlePaymentCheckPhoto(ctx: Context) {
 		await ctx.reply("✅ Chek yuborildi. Admin tasdiqlashini kuting.");
 	} catch (err) {
 		console.error("❌ Rasm yuborishda xatolik:", err);
-		await ctx.reply("❌ Xatolik yuz berdi. Iltimos, qaytadan urinib ko‘ring.");
+		await ctx.reply(`❌ Xatolik yuz berdi. Iltimos, qaytadan urinib ko‘ring. ${JSON.stringify(err)}`);
 	}
 
 	// @ts-ignore

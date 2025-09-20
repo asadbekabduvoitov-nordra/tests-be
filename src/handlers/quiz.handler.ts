@@ -50,7 +50,7 @@ export async function handleQuizAccess(
 		}).eq("id", permission.id);
 
 		await ctx.reply(
-			`✅ Siz ushbu testga kira oldingiz!\n🧾 Quiz ID: ${quizId}`,
+			`✅ Siz ushbu testga kira oldingiz!\n`,
 			Markup.inlineKeyboard([
 				[
 					Markup.button.webApp(

@@ -29,6 +29,35 @@ bot.use(stage.middleware());
 bot.use(check_ban_middleware_1.checkIfBanned);
 // Entry command
 bot.command("start", (ctx) => __awaiter(void 0, void 0, void 0, function* () { return ctx.scene.enter("auth"); }));
+bot.command("yonalishlar", (ctx) => __awaiter(void 0, void 0, void 0, function* () {
+    yield (0, subjects_handler_1.sendSubjectsPage)(ctx, 1);
+}));
+bot.command("testhelp", (ctx) => __awaiter(void 0, void 0, void 0, function* () {
+    yield ctx.reply(`🆘 Test Yordamchi Qo‘llanma
+
+📚 Testlarni qanday boshlash mumkin?
+
+1️⃣ Yo‘nalishlarni ko‘rish
+👉 /yonalishlar tugmasini bosing.
+Bu yerda siz turli fanlar va yo‘nalishlarni ko‘rasiz.
+
+2️⃣ Yo‘nalish tanlash
+Sizni qiziqtirgan yo‘nalishni tanlang.
+Uning ichida mavjud testlar ro‘yxati chiqadi.
+
+3️⃣ Testni boshlash
+	•	Agar sizda ruxsat mavjud bo‘lsa → testni darhol boshlashingiz mumkin.
+	•	Agar ruxsat mavjud bo‘lmasa → tizim sizdan to‘lovni amalga oshirishingizni so‘raydi.
+
+4️⃣ Urinishlar soni
+Har bir testda faqat 3 ta urinish mavjud. Shuning uchun har bir savolga e’tiborli bo‘ling!
+
+⸻
+
+💡 Eslatma: Savollar yoki muammolar yuzaga kelsa, menyudan 📞 Biz bilan bog‘lanish tugmasini tanlang.
+
+Omad tilaymiz! 🚀`);
+}));
 bot.catch(error_handler_1.catch_error);
 // When user clicks 📚 Mavjud Yo'nalishlar (inline button)
 bot.action("choose_directions", (ctx) => __awaiter(void 0, void 0, void 0, function* () {

@@ -11,3 +11,5 @@ export const mainMenuInlineKeyboard = Markup.inlineKeyboard([
 	[Markup.button.callback("📚 Mavjud Yo'nalishlar", "choose_directions")],
 	[Markup.button.callback("📞 Biz bilan bog'lanish", "contact_us")],
 ]);
+
+

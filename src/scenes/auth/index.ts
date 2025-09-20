@@ -2,6 +2,8 @@ import { Scenes } from "telegraf";
 import { messages } from "./texts";
 import { supabase } from "../../configs/supabase";
 import { mainMenuInlineKeyboard, mainMenuKeyboard } from "../../keyboards/main.menu";
+import bot from "../../bot";
+import { startCommand } from "../../commands/start.command";
 
 export const authScene = new Scenes.BaseScene<Scenes.SceneContext>("auth");
 
@@ -34,6 +36,6 @@ authScene.enter(async (ctx) => {
 		}
 	}
 
-	await ctx.reply(`Assalomu alaykum, ${user.first_name}!`, mainMenuKeyboard);
 	await ctx.reply(messages.start, mainMenuInlineKeyboard);
+	await bot.telegram.setMyCommands(startCommand);
 });

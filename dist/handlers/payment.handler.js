@@ -202,7 +202,7 @@ function handlePaymentCheckPhoto(ctx) {
             return;
         }
         try {
-            yield ctx.telegram.sendPhoto(adminChatId, fileId, {
+            yield ctx.telegram.sendPhoto(Number(`-${adminChatId}`), fileId, {
                 caption: `🧾 Yangi to‘lov chek:\n👤 ${(_b = ctx.from) === null || _b === void 0 ? void 0 : _b.first_name} (${(_c = ctx.from) === null || _c === void 0 ? void 0 : _c.id})`,
                 reply_markup: {
                     inline_keyboard: [
@@ -218,7 +218,7 @@ function handlePaymentCheckPhoto(ctx) {
         }
         catch (err) {
             console.error("❌ Rasm yuborishda xatolik:", err);
-            yield ctx.reply("❌ Xatolik yuz berdi. Iltimos, qaytadan urinib ko‘ring.");
+            yield ctx.reply(`❌ Xatolik yuz berdi. Iltimos, qaytadan urinib ko‘ring. ${JSON.stringify(err)}`);
         }
         // @ts-ignore
         ctx.session.awaiting_payment_check = false;

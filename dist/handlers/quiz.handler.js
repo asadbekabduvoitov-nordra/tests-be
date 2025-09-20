@@ -45,7 +45,7 @@ function handleQuizAccess(ctx, quizId, telegramId) {
             yield supabase_1.supabase.from("quiz_permissions").update({
                 remaining_quiz_accesses: permission.remaining_quiz_accesses - 1,
             }).eq("id", permission.id);
-            yield ctx.reply(`✅ Siz ushbu testga kira oldingiz!\n🧾 Quiz ID: ${quizId}`, telegraf_1.Markup.inlineKeyboard([
+            yield ctx.reply(`✅ Siz ushbu testga kira oldingiz!\n`, telegraf_1.Markup.inlineKeyboard([
                 [
                     telegraf_1.Markup.button.webApp("🚀 Testni boshlash", `https://oliy-maqsad.vercel.app/${telegramId}/${quizId}`),
                 ],

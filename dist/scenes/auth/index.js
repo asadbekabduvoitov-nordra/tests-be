@@ -8,12 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.authScene = void 0;
 const telegraf_1 = require("telegraf");
 const texts_1 = require("./texts");
 const supabase_1 = require("../../configs/supabase");
 const main_menu_1 = require("../../keyboards/main.menu");
+const bot_1 = __importDefault(require("../../bot"));
+const start_command_1 = require("../../commands/start.command");
 exports.authScene = new telegraf_1.Scenes.BaseScene("auth");
 exports.authScene.enter((ctx) => __awaiter(void 0, void 0, void 0, function* () {
     const user = ctx.from;
@@ -40,6 +45,6 @@ exports.authScene.enter((ctx) => __awaiter(void 0, void 0, void 0, function* () 
             return ctx.reply("Ro'yxatdan o'tishda xatolik yuz berdi.");
         }
     }
-    yield ctx.reply(`Assalomu alaykum, ${user.first_name}!`, main_menu_1.mainMenuKeyboard);
     yield ctx.reply(texts_1.messages.start, main_menu_1.mainMenuInlineKeyboard);
+    yield bot_1.default.telegram.setMyCommands(start_command_1.startCommand);
 }));

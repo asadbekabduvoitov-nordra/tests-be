@@ -1,6 +1,7 @@
 import type { Context } from "telegraf";
 import { Markup } from "telegraf";
 import { supabase } from "../configs/supabase";
+import { getRandomCard } from "../mock/paymet";
 
 export async function handleQuizAccess(
 	ctx: Context,
@@ -29,37 +30,51 @@ export async function handleQuizAccess(
 			.limit(1)
 			.single();
 
+		const card = getRandomCard();
+
 		if (!permission) {
 			await ctx.reply(
-				"❌ Sizda ushbu testni ishlash uchun ruxsat yo‘q. 💸 Iltimos, 6,500 so‘m to‘lovni amalga oshiring va kvitansiyani yuboring. 💳 To‘lov uchun karta raqami: 8600 1234 5678 9012  ",
-				Markup.inlineKeyboard([
-					[
-						Markup.button.callback(
-							"📤 To'lov chekini yuborish",
-							"send_payment_check",
-						),
-					],
-					[Markup.button.callback("🔙 Ortga", "go_back")],
+			  `❌ Sizda ushbu testni ishlash uchun ruxsat yo‘q.\n` +
+			  `💸 Iltimos, 6,500 so‘m to‘lovni amalga oshiring va kvitansiyani yuboring.\n` +
+			  `💳 To‘lov uchun karta raqami:\n\n` +
+			  `<code>${card.card_number}</code>\n` +
+			  `${card.card_holder}`,
+			  {
+				parse_mode: "HTML",
+				...Markup.inlineKeyboard([
+				  [
+					Markup.button.callback(
+					  "📤 To'lov chekini yuborish",
+					  "send_payment_check",
+					),
+				  ],
+				  [Markup.button.callback("🔙 Ortga", "go_back")],
 				]),
+			  },
 			);
 			return;
-		}
+		  }
 
-		await supabase.from("quiz_permissions").update({
-			remaining_quiz_accesses: permission.remaining_quiz_accesses - 1,
-		}).eq("id", permission.id);
+		// await supabase.from("quiz_permissions").update({
+		// 	remaining_quiz_accesses: permission.remaining_quiz_accesses - 1,
+		// }).eq("id", permission.id);
 
 		await ctx.reply(
-			`✅ Siz ushbu testga kira oldingiz!\n`,
-			Markup.inlineKeyboard([
+			`✅ Siz testga muvaffaqiyatli kirdingiz!\n\n` +
+			`ℹ️ Eslatma: Sizda <b>${permission?.remaining_quiz_accesses} ta urinish</b> bor. ` +
+			`Testni boshlaganingizda bitta urinish kamayadi.`,
+			{
+			  parse_mode: "HTML",
+			  ...Markup.inlineKeyboard([
 				[
-					Markup.button.webApp(
-						"🚀 Testni boshlash",
-						`https://oliy-maqsad.vercel.app/${telegramId}/${quizId}`,
-					),
+				  Markup.button.webApp(
+					"🚀 Testni boshlash",
+					`https://oliy-maqsad.vercel.app/${telegramId}/${quizId}`
+				  ),
 				],
-			]),
-		);
+			  ]),
+			}
+		  );
 	} catch (error) {
 		console.error("Quiz access error:", error);
 		await ctx.reply("⚠️ Xatolik yuz berdi. Iltimos, keyinroq urinib ko'ring.");

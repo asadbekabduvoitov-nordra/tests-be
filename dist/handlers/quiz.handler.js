@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.handleQuizAccess = handleQuizAccess;
 const telegraf_1 = require("telegraf");
 const supabase_1 = require("../configs/supabase");
+const paymet_1 = require("../mock/paymet");
 function handleQuizAccess(ctx, quizId, telegramId) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -33,13 +34,18 @@ function handleQuizAccess(ctx, quizId, telegramId) {
                 .order("purchased_at", { ascending: false })
                 .limit(1)
                 .single();
+            const card = (0, paymet_1.getRandomCard)();
             if (!permission) {
-                yield ctx.reply("❌ Sizda ushbu testni ishlash uchun ruxsat yo‘q. 💸 Iltimos, 6,500 so‘m to‘lovni amalga oshiring va kvitansiyani yuboring. 💳 To‘lov uchun karta raqami: 8600 1234 5678 9012  ", telegraf_1.Markup.inlineKeyboard([
+                yield ctx.reply(`❌ Sizda ushbu testni ishlash uchun ruxsat yo‘q.\n` +
+                    `💸 Iltimos, 6,500 so‘m to‘lovni amalga oshiring va kvitansiyani yuboring.\n` +
+                    `💳 To‘lov uchun karta raqami:\n\n` +
+                    `<code>${card.card_number}</code>\n` +
+                    `${card.card_holder}`, Object.assign({ parse_mode: "HTML" }, telegraf_1.Markup.inlineKeyboard([
                     [
                         telegraf_1.Markup.button.callback("📤 To'lov chekini yuborish", "send_payment_check"),
                     ],
                     [telegraf_1.Markup.button.callback("🔙 Ortga", "go_back")],
-                ]));
+                ])));
                 return;
             }
             yield supabase_1.supabase.from("quiz_permissions").update({

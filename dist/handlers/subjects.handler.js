@@ -78,6 +78,10 @@ const handleSubjectSelected = (ctx_1, subjectId_1, ...args_1) => __awaiter(void 
     }
     if (paginationRow.length)
         buttons.push(paginationRow);
+    // 🔹 Add a back-to-subjects button
+    buttons.push([
+        telegraf_1.Markup.button.callback("⬅️ Yo'nalishlarga qaytish", "back_to_subjects"),
+    ]);
     yield ctx.editMessageText("Testlardan birini tanlang:", telegraf_1.Markup.inlineKeyboard(buttons));
 });
 exports.handleSubjectSelected = handleSubjectSelected;

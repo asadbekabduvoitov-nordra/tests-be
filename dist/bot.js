@@ -64,6 +64,20 @@ bot.action("choose_directions", (ctx) => __awaiter(void 0, void 0, void 0, funct
     yield ctx.answerCbQuery();
     yield (0, subjects_handler_1.sendSubjectsPage)(ctx, 1);
 }));
+// When user clicks ⬅️ Fanlarga qaytish (inline button)
+bot.action("back_to_subjects", (ctx) => __awaiter(void 0, void 0, void 0, function* () {
+    yield ctx.answerCbQuery();
+    try {
+        // try to remove the current message (the quiz list)
+        yield ctx.deleteMessage();
+    }
+    catch (err) {
+        // delete can fail (e.g. insufficient rights, message already gone) — just log and continue
+        console.warn("Could not delete message:", err);
+    }
+    // send a fresh subjects message (sendSubjectsPage uses ctx.reply)
+    yield (0, subjects_handler_1.sendSubjectsPage)(ctx, 1);
+}));
 // When user clicks 📞 Biz bilan bog'lanish (inline button)
 bot.action("contact_us", (ctx) => __awaiter(void 0, void 0, void 0, function* () {
     yield ctx.answerCbQuery(); // remove "loading" animation on button click

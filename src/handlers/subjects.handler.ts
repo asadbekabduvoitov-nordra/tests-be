@@ -94,7 +94,13 @@ export const handleSubjectSelected = async (
 			),
 		);
 	}
+
 	if (paginationRow.length) buttons.push(paginationRow);
+
+	// 🔹 Add a back-to-subjects button
+	buttons.push([
+		Markup.button.callback("⬅️ Yo'nalishlarga qaytish", "back_to_subjects"),
+	]);
 
 	await ctx.editMessageText(
 		"Testlardan birini tanlang:",
